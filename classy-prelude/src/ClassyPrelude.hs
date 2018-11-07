@@ -28,8 +28,6 @@ module ClassyPrelude
     , module Control.Concurrent.Chan.Lifted
     , module Control.Concurrent.STM
     , atomically
-    , alwaysSTM
-    , alwaysSucceedsSTM
     , retrySTM
     , orElseSTM
     , checkSTM
@@ -489,16 +487,6 @@ atomically = liftIO . STM.atomically
 retrySTM :: STM a
 retrySTM = STM.retry
 {-# INLINE retrySTM #-}
-
--- | Synonym for 'STM.always'.
-alwaysSTM :: STM Bool -> STM ()
-alwaysSTM = STM.always
-{-# INLINE alwaysSTM #-}
-
--- | Synonym for 'STM.alwaysSucceeds'.
-alwaysSucceedsSTM :: STM a -> STM ()
-alwaysSucceedsSTM = STM.alwaysSucceeds
-{-# INLINE alwaysSucceedsSTM #-}
 
 -- | Synonym for 'STM.orElse'.
 orElseSTM :: STM a -> STM a -> STM a

@@ -1,4 +1,4 @@
-resolver: lts-9.9
+resolver: nightly-2018-11-06
 packages:
 - minlen
 - mono-traversable
