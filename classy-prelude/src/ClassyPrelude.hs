@@ -25,6 +25,11 @@ module ClassyPrelude
       -- ** UnliftIO reexports
     , module UnliftIO
       -- ** Mutable references
+    , module Control.Concurrent.MVar.Lifted
+    , module Control.Concurrent.Chan.Lifted
+    , module Control.Concurrent.STM
+    , atomically
+    , retrySTM
     , orElseSTM
     , module Data.Mutable
       -- ** STM Channels
@@ -430,6 +435,15 @@ ordNubBy p f = go Map.empty
     elem_by :: (a -> a -> Bool) -> a -> [a] -> Bool
     elem_by _  _ []     = False
     elem_by eq y (x:xs) = y `eq` x || elem_by eq y xs
+
+-- | Generalized version of 'STM.atomically'.
+atomically :: MonadIO m => STM a -> m a
+atomically = liftIO . STM.atomically
+
+-- | Synonym for 'STM.retry'.
+retrySTM :: STM a
+retrySTM = STM.retry
+{-# INLINE retrySTM #-}
 
 -- | Synonym for 'STM.orElse'.
 orElseSTM :: STM a -> STM a -> STM a
